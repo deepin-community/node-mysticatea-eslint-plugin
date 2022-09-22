@@ -1,0 +1,65 @@
+node-mysticatea-eslint-plugin (11.0.0~ds-4) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Set upstream metadata fields: Bug-Database, Bug-Submit, Repository, Repository-Browse.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Wed, 15 Sep 2021 17:05:21 +0100
+
+node-mysticatea-eslint-plugin (11.0.0~ds-3) unstable; urgency=medium
+
+  * fix grammar in long description
+  * fix skip test related to not yet covered vue.js rules;
+    closes: bug#980231, #980646,
+    thanks to Paul Gevers and Lucas Nussbaum
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sat, 06 Feb 2021 22:49:11 +0100
+
+node-mysticatea-eslint-plugin (11.0.0~ds-2) unstable; urgency=medium
+
+  * fix tighten (build-)dependency on node-eslint-plugin-node
+  * fix have autopkgtest depend on nodejs
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 27 Dec 2020 05:01:12 +0100
+
+node-mysticatea-eslint-plugin (11.0.0~ds-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * fix autopkgtest
+  * update patch 2003
+  * add patch 2007 to use older ESLint v5.16
+  * update build routines to disable color at more places,
+    and avoid double mochar options with DEB_BUILD_OPTIONS=terse
+  * update workarounds for failing tests
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 16 Dec 2020 16:42:24 +0100
+
+node-mysticatea-eslint-plugin (10.0.3~ds-3) unstable; urgency=medium
+
+  * fix invert logic of DEB_BUILD_PROFILES=pkg.eslint.stage1
+  * annotate pkg.eslint.stage1 build-dependencies
+    as also needed for checking tests
+  * update workarounds for failing tests
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 14 Dec 2020 18:57:12 +0100
+
+node-mysticatea-eslint-plugin (10.0.3~ds-2) unstable; urgency=medium
+
+  * improve short and long package description
+  * fix build-depend (not depend) on nodejs
+  * support DEB_BUILD_OPTIONS=terse
+  * drop patch 2007; build-depend on node-eslint-plugin-es
+  * rename to use custom DEB_BUILD_PROFILES=pkg.eslint.stage1
+    (not negated DEB_BUILD_PROFILES=pkg.eslint.nobuild)
+  * fix build-depend explicitly on node-globals
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 14 Dec 2020 12:11:09 +0100
+
+node-mysticatea-eslint-plugin (10.0.3~ds-1) experimental; urgency=low
+
+  * initial release;
+    closes: Bug#955218
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 08 Dec 2020 02:05:56 +0100

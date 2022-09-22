@@ -1,0 +1,7 @@
+2001_privacy.patch
+2002_scripts_no_eslint.patch
+2003_avoid_typescript.patch
+2004_avoid_vue.patch
+2005_avoid_eslint-plugin-eslint-comments.patch
+2006_avoid_prettier.patch
+2007_use_older_ESLint.patch

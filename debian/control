@@ -1,0 +1,43 @@
+Source: node-mysticatea-eslint-plugin
+Section: javascript
+Priority: optional
+Maintainer: Debian Javascript Maintainers <pkg-javascript-devel@lists.alioth.debian.org>
+Uploaders:
+ Jonas Smedegaard <dr@jones.dk>,
+Build-Depends:
+ debhelper-compat (= 13),
+ eslint <!nocheck> <!pkg.eslint.stage1>,
+ mocha <!nocheck>,
+ node-eslint-plugin-es <!nocheck> <!pkg.eslint.stage1>,
+ node-eslint-plugin-eslint-plugin <!nocheck> <!pkg.eslint.stage1>,
+ node-eslint-plugin-node (>= 9.1.0~) <!nocheck> <!pkg.eslint.stage1>,
+ node-fs-extra,
+ node-globals,
+ nodejs,
+ pandoc <!nodoc>,
+ perl <!nocheck>,
+Standards-Version: 4.5.1
+Homepage: https://github.com/mysticatea/eslint-plugin
+Vcs-Browser: https://salsa.debian.org/js-team/node-mysticatea-eslint-plugin
+Vcs-Git: https://salsa.debian.org/js-team/node-mysticatea-eslint-plugin.git
+Rules-Requires-Root: no
+
+Package: node-mysticatea-eslint-plugin
+Architecture: all
+Depends:
+ node-eslint-plugin-eslint-plugin,
+ node-eslint-plugin-node (>= 9.1.0~),
+ node-eslint-visitor-keys,
+ ${misc:Depends},
+Description: additional rules for ESLint as used by Toru Nagashima
+ mysticatea-eslint-plugin provides
+ additional rules and configuration profiles for ESLint,
+ used to validate other more general-purpose ESLint packages.
+ .
+ Unless you want to code in same style as Toru Nagashima,
+ you probably have no direct need for this package.
+ .
+ ESLint is a tool for identifying and reporting on patterns
+ found in ECMAScript/JavaScript code.
+ .
+ Node.js is an event-based server-side JavaScript engine.

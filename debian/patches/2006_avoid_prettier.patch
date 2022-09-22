@@ -1,0 +1,58 @@
+Description: Avoid node module eslint-plugin-prettier
+Author: Jonas Smedegaard <dr@jones.dk>
+Last-Update: 2020-12-08
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/lib/configs/es5.js
++++ b/lib/configs/es5.js
+@@ -362,19 +362,6 @@
+             // Plugins
+             //
+ 
+-            // prettier
+-            "@mysticatea/prettier": [
+-                "error",
+-                {
+-                    tabWidth: 4,
+-                    semi: false,
+-                    trailingComma: "es5",
+-                },
+-                {
+-                    usePrettierrc: false,
+-                },
+-            ],
+-
+             // my own
+             "@mysticatea/arrow-parens": "off",
+             "@mysticatea/block-scoped-var": "error",
+--- a/lib/foreign-rules/prettier.js
++++ b/lib/foreign-rules/prettier.js
+@@ -3,7 +3,3 @@
+  * See LICENSE file in root directory for full license.
+  */
+ "use strict"
+-
+-const rules = require("eslint-plugin-prettier").rules
+-
+-module.exports = { prettier: rules.prettier }
+--- a/lib/configs/es2017.js
++++ b/lib/configs/es2017.js
+@@ -13,17 +13,5 @@
+         Atomics: false,
+         SharedArrayBuffer: false,
+     },
+-    rules: {
+-        "@mysticatea/prettier": [
+-            "error",
+-            {
+-                tabWidth: 4,
+-                semi: false,
+-                trailingComma: "all",
+-            },
+-            {
+-                usePrettierrc: false,
+-            },
+-        ],
+-    },
++    rules: {},
+ }

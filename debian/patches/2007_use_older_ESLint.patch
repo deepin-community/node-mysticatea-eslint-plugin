@@ -1,0 +1,59 @@
+Description: use older ESLint v5.16
+ This patch partly reverts upstream commit a59386b.
+Author: Jonas Smedegaard <dr@jones.dk>
+Last-Update: 2020-12-16
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/tests/lib/configs/_rules.js
++++ b/tests/lib/configs/_rules.js
+@@ -4,11 +4,15 @@
+  */
+ "use strict"
+ 
+-const { Linter } = require("eslint")
+-const Validator = require("eslint/lib/shared/config-validator")
+-const { rules: PluginRulesIndex } = require("@mysticatea/eslint-plugin")
+-
+-const coreRules = new Linter().getRules()
++const Validator = require("eslint/lib/config/config-validator")
++const Environments = require("eslint/lib/config/environments")
++const RulesIndex = require("eslint/lib/built-in-rules-index")
++const PluginRulesIndex = require("../../../lib/rules")
++
++const environments = new Environments()
++const coreRules = new Map(
++    Object.keys(RulesIndex).map(key => [key, RulesIndex[key]])
++)
+ const pluginRules = new Map(
+     Object.keys(PluginRulesIndex).map(key => [
+         `@mysticatea/${key}`,
+@@ -34,7 +38,12 @@
+      * @returns {void}
+      */
+     validateConfig(config, source) {
+-        Validator.validate(config, source, ruleId => allRules.get(ruleId))
++        Validator.validate(
++            config,
++            ruleId => allRules.get(ruleId),
++            environments,
++            source
++        )
+ 
+         /* istanbul ignore next */
+         for (const ruleId of [].concat(
+@@ -82,10 +91,11 @@
+      */
+     getPluginRuleNames(pluginName) {
+         return Object.keys(PluginRulesIndex)
+-            .filter(ruleId =>
+-                pluginName === "@mysticatea"
+-                    ? !ruleId.includes("/")
+-                    : ruleId.startsWith(`${pluginName}/`)
++            .filter(
++                ruleId =>
++                    pluginName === "@mysticatea"
++                        ? !ruleId.includes("/")
++                        : ruleId.startsWith(`${pluginName}/`)
+             )
+             .map(ruleId => `@mysticatea/${ruleId}`)
+             .filter(

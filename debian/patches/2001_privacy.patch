@@ -1,0 +1,19 @@
+Description: Avoid privacy breach in documentation
+Author: Jonas Smedegaard <dr@jones.dk>
+Last-Update: 2019-10-17
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/README.md
++++ b/README.md
+@@ -1,11 +1,5 @@
+ # @mysticatea/eslint-plugin
+ 
+-[![npm version](https://img.shields.io/npm/v/@mysticatea/eslint-plugin.svg)](https://www.npmjs.com/package/@mysticatea/eslint-plugin)
+-[![Downloads/month](https://img.shields.io/npm/dm/@mysticatea/eslint-plugin.svg)](http://www.npmtrends.com/@mysticatea/eslint-plugin)
+-[![Build Status](https://travis-ci.org/mysticatea/eslint-plugin.svg?branch=master)](https://travis-ci.org/mysticatea/eslint-plugin)
+-[![codecov](https://codecov.io/gh/mysticatea/eslint-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/mysticatea/eslint-plugin)
+-[![Dependency Status](https://david-dm.org/mysticatea/eslint-plugin.svg)](https://david-dm.org/mysticatea/eslint-plugin)
+-
+ Additional ESLint rules and ESLint configurations for me.
+ 
+ ## 💿 Installation

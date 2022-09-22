@@ -1,0 +1,36 @@
+Test-Command: node -e "require('@mysticatea/eslint-plugin');"
+Depends:
+ node-mysticatea-eslint-plugin,
+ nodejs,
+Restrictions: superficial
+
+Test-Command:
+ sed -i -e 's,require("\.\./\.\./\.\./lib\([^"]*\)"),require("@mysticatea/eslint-plugin/lib\1");,' tests/lib/*/*.js
+ && NO_COLOR=1 mocha --reporter tap
+ --exclude tests/lib/configs/ts.js
+ --exclude tests/lib/configs/vue.js
+ "tests/lib/**/*.js"
+ | debian/tap-todo
+ "'es5.js' should include existing rule 'multiline-comment-style'."
+ "'es5.js' should include existing rule 'no-misleading-character-class'."
+ "'\+eslint-plugin.js' should include existing rule '\@mysticatea/eslint-plugin/prefer-object-rule'."
+ "'\+eslint-plugin.js' should include existing rule '\@mysticatea/eslint-plugin/require-meta-docs-description'."
+ "'\+eslint-plugin.js' should include existing rule '\@mysticatea/eslint-plugin/require-meta-schema'."
+ "'\+node.js' should include existing rule '\@mysticatea/node/callback-return'."
+ "'\+node.js' should include existing rule '\@mysticatea/node/global-require'."
+ "'\+node.js' should include existing rule '\@mysticatea/node/handle-callback-err'."
+ "'\+node.js' should include existing rule '\@mysticatea/node/no-callback-literal'."
+ "'\+node.js' should include existing rule '\@mysticatea/node/no-exports-assign'."
+ "'\+node.js' should include existing rule '\@mysticatea/node/no-mixed-requires'."
+ "'\+node.js' should include existing rule '\@mysticatea/node/no-new-require'."
+ "'\+node.js' should include existing rule '\@mysticatea/node/no-path-concat'."
+ "'\+node.js' should include existing rule '\@mysticatea/node/no-process-env'."
+ "'\+node.js' should include existing rule '\@mysticatea/node/no-process-exit'."
+ "'\+node.js' should include existing rule '\@mysticatea/node/no-restricted-import'."
+ "'\+node.js' should include existing rule '\@mysticatea/node/no-restricted-require'."
+ "'\+node.js' should include existing rule '\@mysticatea/node/no-sync'."
+Depends:
+ mocha,
+ node-eslint,
+ node-mysticatea-eslint-plugin,
+ perl,

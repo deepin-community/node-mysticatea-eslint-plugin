@@ -1,0 +1,67 @@
+Description: Avoid node module eslint-plugin-eslint-comments
+Author: Jonas Smedegaard <dr@jones.dk>
+Last-Update: 2020-12-08
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/lib/configs/es5.js
++++ b/lib/configs/es5.js
+@@ -41,7 +41,6 @@
+             "linebreak-style": ["error", "unix"],
+             "lines-between-class-members": "error",
+             "max-statements-per-line": ["error", { max: 1 }],
+-            "multiline-comment-style": ["error", "separate-lines"],
+             "new-cap": "error",
+             "no-alert": "error",
+             "no-array-constructor": "error",
+@@ -92,7 +91,6 @@
+             "no-lone-blocks": "error",
+             "no-lonely-if": "error",
+             "no-loop-func": "error",
+-            "no-misleading-character-class": "error",
+             "no-mixed-operators": [
+                 "error",
+                 {
+@@ -364,28 +362,6 @@
+             // Plugins
+             //
+ 
+-            // eslint-comments
+-            "@mysticatea/eslint-comments/disable-enable-pair": "error",
+-            "@mysticatea/eslint-comments/no-aggregating-enable": "error",
+-            "@mysticatea/eslint-comments/no-duplicate-disable": "error",
+-            "@mysticatea/eslint-comments/no-restricted-disable": "off",
+-            "@mysticatea/eslint-comments/no-unlimited-disable": "error",
+-            "@mysticatea/eslint-comments/no-unused-disable": "error",
+-            "@mysticatea/eslint-comments/no-unused-enable": "error",
+-            "@mysticatea/eslint-comments/no-use": [
+-                "error",
+-                {
+-                    allow: [
+-                        "eslint-disable",
+-                        "eslint-disable-line",
+-                        "eslint-disable-next-line",
+-                        "eslint-enable",
+-                        "eslint-env",
+-                        "globals",
+-                    ],
+-                },
+-            ],
+-
+             // prettier
+             "@mysticatea/prettier": [
+                 "error",
+--- a/lib/foreign-rules/eslint-comments.js
++++ b/lib/foreign-rules/eslint-comments.js
+@@ -3,12 +3,3 @@
+  * See LICENSE file in root directory for full license.
+  */
+ "use strict"
+-
+-const { rules, utils } = require("eslint-plugin-eslint-comments")
+-
+-utils.patch("@mysticatea/eslint-comments/no-unused-disable")
+-
+-module.exports = Object.keys(rules).reduce((obj, ruleId) => {
+-    obj[`eslint-comments/${ruleId}`] = rules[ruleId]
+-    return obj
+-}, {})
