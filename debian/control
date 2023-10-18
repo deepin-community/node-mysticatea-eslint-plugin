@@ -5,6 +5,7 @@ Maintainer: Debian Javascript Maintainers <pkg-javascript-devel@lists.alioth.deb
 Uploaders:
  Jonas Smedegaard <dr@jones.dk>,
 Build-Depends:
+ cmark-gfm <!nodoc>,
  debhelper-compat (= 13),
  eslint <!nocheck> <!pkg.eslint.stage1>,
  mocha <!nocheck>,
@@ -14,9 +15,8 @@ Build-Depends:
  node-fs-extra,
  node-globals,
  nodejs,
- pandoc <!nodoc>,
  perl <!nocheck>,
-Standards-Version: 4.5.1
+Standards-Version: 4.6.0
 Homepage: https://github.com/mysticatea/eslint-plugin
 Vcs-Browser: https://salsa.debian.org/js-team/node-mysticatea-eslint-plugin
 Vcs-Git: https://salsa.debian.org/js-team/node-mysticatea-eslint-plugin.git

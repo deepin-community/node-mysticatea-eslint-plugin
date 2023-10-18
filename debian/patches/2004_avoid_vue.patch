@@ -5,22 +5,14 @@ Last-Update: 2020-12-08
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 --- a/lib/configs/es5.js
 +++ b/lib/configs/es5.js
-@@ -5,7 +5,6 @@
- "use strict"
- 
- const { merge } = require("../utils")
--const vueConfig = require("./_vue")
- const mochaConfig = require("./_mocha")
- const specialConfig = require("./_special")
- 
-@@ -412,7 +411,6 @@
-             "@mysticatea/prefer-for-of": "off",
-         },
-     },
--    vueConfig,
-     mochaConfig,
-     specialConfig
- )
+@@ -7,7 +7,6 @@
+ module.exports = {
+     extends: [
+         require.resolve("./_base.js"),
+-        require.resolve("./_override-vue.js"),
+         require.resolve("./_override-mocha.js"),
+         require.resolve("./_override-special.js"),
+     ],
 --- a/lib/foreign-rules/vue.js
 +++ b/lib/foreign-rules/vue.js
 @@ -3,10 +3,3 @@
@@ -34,20 +26,21 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 -    obj[`vue/${ruleId}`] = rules[ruleId]
 -    return obj
 -}, {})
---- a/lib/configs/_vue.js
-+++ b/lib/configs/_vue.js
-@@ -3,145 +3,3 @@
+--- a/lib/configs/_override-vue.js
++++ b/lib/configs/_override-vue.js
+@@ -3,133 +3,3 @@
   * See LICENSE file in root directory for full license.
   */
  "use strict"
 -
--const { merge } = require("../utils")
--const browserConfig = require("./+browser")
--const modulesConfig = require("./+modules")
--
 -module.exports = {
 -    overrides: [
--        merge({ files: ["*.vue"] }, browserConfig, modulesConfig, {
+-        {
+-            files: ["*.vue"],
+-            extends: [
+-                require.resolve("./+browser.js"),
+-                require.resolve("./+modules.js"),
+-            ],
 -            parser: require.resolve("vue-eslint-parser"),
 -            rules: {
 -                // Enabled rules
@@ -166,19 +159,31 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 -                "@mysticatea/vue/no-restricted-syntax": "off",
 -                "@mysticatea/vue/script-indent": "off",
 -            },
--            settings: {
--                node: {
--                    tryExtensions: [
--                        ".vue",
--                        ".ts",
--                        ".tsx",
--                        ".mjs",
--                        ".js",
--                        ".json",
--                        ".node",
--                    ],
--                },
--            },
--        }),
+-        },
 -    ],
 -}
+--- a/tests/lib/configs/vue.js
++++ b/tests/lib/configs/vue.js
+@@ -4,22 +4,3 @@
+  * See LICENSE file in root directory for full license.
+  */
+ "use strict"
+-
+-const assert = require("assert")
+-const Rules = require("./_rules")
+-
+-describe("'vue.js'", () => {
+-    const config = require("../../../lib/configs/_override-vue")
+-    const configuredRules = Rules.getRulesOfConfig(config, "_override-ts")
+-    const existingRules = Rules.getPluginRuleNames("vue")
+-
+-    it("should be a valid config.", () => {
+-        Rules.validateConfig(config, "vue.js")
+-    })
+-
+-    for (const ruleId of existingRules) {
+-        it(`should include existing rule '${ruleId}'.`, () => {
+-            assert(ruleId in configuredRules)
+-        })
+-    }
+-})

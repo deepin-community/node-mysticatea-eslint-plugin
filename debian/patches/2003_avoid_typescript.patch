@@ -5,22 +5,14 @@ Last-Update: 2020-12-08
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 --- a/lib/configs/es5.js
 +++ b/lib/configs/es5.js
-@@ -5,7 +5,6 @@
- "use strict"
- 
- const { merge } = require("../utils")
--const tsConfig = require("./_ts")
- const vueConfig = require("./_vue")
- const mochaConfig = require("./_mocha")
- const specialConfig = require("./_special")
-@@ -413,7 +412,6 @@
-             "@mysticatea/prefer-for-of": "off",
-         },
-     },
--    tsConfig,
-     vueConfig,
-     mochaConfig,
-     specialConfig
+@@ -7,7 +7,6 @@
+ module.exports = {
+     extends: [
+         require.resolve("./_base.js"),
+-        require.resolve("./_override-ts.js"),
+         require.resolve("./_override-vue.js"),
+         require.resolve("./_override-mocha.js"),
+         require.resolve("./_override-special.js"),
 --- a/lib/foreign-rules/ts.js
 +++ b/lib/foreign-rules/ts.js
 @@ -3,17 +3,3 @@
@@ -41,19 +33,18 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 -    obj[`ts/${ruleId}`] = rules[ruleId]
 -    return obj
 -}, {})
---- a/lib/configs/_ts.js
-+++ b/lib/configs/_ts.js
-@@ -3,133 +3,3 @@
+--- a/lib/configs/_override-ts.js
++++ b/lib/configs/_override-ts.js
+@@ -3,129 +3,3 @@
   * See LICENSE file in root directory for full license.
   */
  "use strict"
 -
--const { merge } = require("../utils")
--const moduleConfig = require("./+modules")
--
 -module.exports = {
 -    overrides: [
--        merge({ files: ["*.ts", "*.tsx"] }, moduleConfig, {
+-        {
+-            files: ["*.ts", "*.tsx"],
+-            extends: [require.resolve("./+modules.js")],
 -            parser: require.resolve("@typescript-eslint/parser"),
 -            parserOptions: {
 -                loggerFn: false,
@@ -66,10 +57,10 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 -                "@mysticatea/ts/await-thenable": "error",
 -                "@mysticatea/ts/ban-ts-ignore": "error",
 -                "@mysticatea/ts/class-name-casing": "error",
+-                "@mysticatea/ts/consistent-type-assertions": "error",
 -                "@mysticatea/ts/explicit-member-accessibility": "error",
 -                "@mysticatea/ts/interface-name-prefix": "error",
 -                "@mysticatea/ts/member-naming": "error",
--                "@mysticatea/ts/no-angle-bracket-type-assertion": "error",
 -                "@mysticatea/ts/no-array-constructor": "error",
 -                "@mysticatea/ts/no-empty-interface": "error",
 -                "@mysticatea/ts/no-extraneous-class": "error",
@@ -77,27 +68,31 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 -                "@mysticatea/ts/no-for-in-array": "error",
 -                "@mysticatea/ts/no-inferrable-types": "error",
 -                "@mysticatea/ts/no-misused-new": "error",
--                "@mysticatea/ts/no-object-literal-type-assertion": "error",
+-                "@mysticatea/ts/no-misused-promises": "error",
 -                "@mysticatea/ts/no-parameter-properties": "error",
 -                "@mysticatea/ts/no-require-imports": "error",
 -                "@mysticatea/ts/no-this-alias": [
 -                    "error",
 -                    { allowDestructuring: true },
 -                ],
--                "@mysticatea/ts/no-triple-slash-reference": "error",
 -                "@mysticatea/ts/no-unnecessary-qualifier": "error",
+-                "@mysticatea/ts/no-unnecessary-type-arguments": "error",
 -                "@mysticatea/ts/no-unnecessary-type-assertion": "error",
 -                "@mysticatea/ts/no-var-requires": "error",
 -                // https://github.com/typescript-eslint/typescript-eslint/issues/454
 -                "@mysticatea/ts/prefer-function-type": "off",
 -                "@mysticatea/ts/prefer-includes": "error",
 -                "@mysticatea/ts/prefer-namespace-keyword": "error",
+-                // https://github.com/typescript-eslint/typescript-eslint/issues/946
+-                "@mysticatea/ts/prefer-readonly": "off",
 -                "@mysticatea/ts/prefer-regexp-exec": "error",
 -                "@mysticatea/ts/prefer-string-starts-ends-with": "error",
 -                "@mysticatea/ts/restrict-plus-operands": "error",
 -                "@mysticatea/ts/require-array-sort-compare": "error",
+-                "@mysticatea/ts/triple-slash-reference": "error",
+-                // なんか誤検知が多い...
 -                "@mysticatea/ts/unbound-method": [
--                    "error",
+-                    "off",
 -                    { ignoreStatic: true },
 -                ],
 -                // https://github.com/typescript-eslint/typescript-eslint/issues/452
@@ -122,6 +117,8 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 -                "@mysticatea/ts/no-empty-function": "error",
 -                "no-useless-constructor": "off",
 -                "@mysticatea/ts/no-useless-constructor": "error",
+-                "require-await": "off",
+-                "@mysticatea/ts/require-await": "error",
 -
 -                // Disabled rules
 -                "func-style": "off",
@@ -153,22 +150,13 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 -                "@mysticatea/ts/no-use-before-define": "off", // tsc verifies it.
 -                "@mysticatea/ts/prefer-for-of": "off",
 -                "@mysticatea/ts/promise-function-async": "off",
+-                "@mysticatea/ts/quotes": "off", // favor of Prettier.
 -                "@mysticatea/ts/semi": "off", // favor of Prettier.
+-                "@mysticatea/ts/strict-boolean-expressions": "off",
 -                "@mysticatea/ts/type-annotation-spacing": "off", // favor of Prettier.
+-                "@mysticatea/ts/typedef": "off",
 -            },
--            settings: {
--                node: {
--                    tryExtensions: [
--                        ".ts",
--                        ".tsx",
--                        ".mjs",
--                        ".js",
--                        ".json",
--                        ".node",
--                    ],
--                },
--            },
--        }),
+-        },
 -        {
 -            files: ["*.d.ts"],
 -            rules: {
@@ -177,3 +165,28 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 -        },
 -    ],
 -}
+--- a/tests/lib/configs/ts.js
++++ b/tests/lib/configs/ts.js
+@@ -4,22 +4,3 @@
+  * See LICENSE file in root directory for full license.
+  */
+ "use strict"
+-
+-const assert = require("assert")
+-const Rules = require("./_rules")
+-
+-describe("'ts.js'", () => {
+-    const config = require("../../../lib/configs/_override-ts")
+-    const configuredRules = Rules.getRulesOfConfig(config, "_override-ts")
+-    const existingRules = Rules.getPluginRuleNames("ts")
+-
+-    it("should be a valid config.", () => {
+-        Rules.validateConfig(config, "ts.js")
+-    })
+-
+-    for (const ruleId of existingRules) {
+-        it(`should include existing rule '${ruleId}'.`, () => {
+-            assert(ruleId in configuredRules)
+-        })
+-    }
+-})

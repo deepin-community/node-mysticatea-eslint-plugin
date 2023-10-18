@@ -1,3 +1,24 @@
+node-mysticatea-eslint-plugin (12.0.0~ds-1) unstable; urgency=medium
+
+  [ upstream ]
+  * new release
+
+  [ Jonas Smedegaard ]
+  * drop obsolete patch 2007
+  * update and unfuzz patches
+  * generate documentation with cmark-gfm (not pandoc);
+    build-depend on cmark-gfm (not pandoc)
+  * update git-buildpackage config: add usage comment
+  * update copyright info:
+    + use Reference field (not License-Reference);
+      tighten lintian overrides
+    + update coverage
+  * declare compliance with Debian Policy 4.6.0
+  * update test coverage
+  * simplify source helper script copyright-check
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 25 Feb 2022 16:27:13 +0100
+
 node-mysticatea-eslint-plugin (11.0.0~ds-4) unstable; urgency=medium
 
   [ Debian Janitor ]
