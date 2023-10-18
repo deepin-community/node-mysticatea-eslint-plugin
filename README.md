@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@mysticatea/eslint-plugin.svg)](https://www.npmjs.com/package/@mysticatea/eslint-plugin)
 [![Downloads/month](https://img.shields.io/npm/dm/@mysticatea/eslint-plugin.svg)](http://www.npmtrends.com/@mysticatea/eslint-plugin)
-[![Build Status](https://travis-ci.org/mysticatea/eslint-plugin.svg?branch=master)](https://travis-ci.org/mysticatea/eslint-plugin)
+[![Build Status](https://github.com/mysticatea/eslint-plugin/workflows/CI/badge.svg)](https://github.com/mysticatea/eslint-plugin/actions)
 [![codecov](https://codecov.io/gh/mysticatea/eslint-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/mysticatea/eslint-plugin)
 [![Dependency Status](https://david-dm.org/mysticatea/eslint-plugin.svg)](https://david-dm.org/mysticatea/eslint-plugin)
 
@@ -16,8 +16,8 @@ npm install --save-dev eslint @mysticatea/eslint-plugin
 
 ### Requirements
 
-- Node.js `^6.5.0`, `^8.0.0`, `^9.0.0` or newer versions.
-- ESLint `^4.19.1` or newer versions.
+- Node.js `^8.10.0` or newer versions.
+- ESLint `^6.3.0` or newer versions.
 
 ## 📖 Usage
 
@@ -25,6 +25,7 @@ Write in your ESLint configurations: http://eslint.org/docs/user-guide/configuri
 
 ### Configs
 
+- `plugin:@mysticatea/es2020` ... Basic configuration for ES2020.
 - `plugin:@mysticatea/es2019` ... Basic configuration for ES2019.
 - `plugin:@mysticatea/es2018` ... Basic configuration for ES2018.
 - `plugin:@mysticatea/es2017` ... Basic configuration for ES2017.

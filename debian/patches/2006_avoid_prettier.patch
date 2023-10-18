@@ -3,28 +3,28 @@ Author: Jonas Smedegaard <dr@jones.dk>
 Last-Update: 2020-12-08
 ---
 This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
---- a/lib/configs/es5.js
-+++ b/lib/configs/es5.js
-@@ -362,19 +362,6 @@
-             // Plugins
-             //
+--- a/lib/configs/_base.js
++++ b/lib/configs/_base.js
+@@ -358,19 +358,6 @@
+         // Plugins
+         //
  
--            // prettier
--            "@mysticatea/prettier": [
--                "error",
--                {
--                    tabWidth: 4,
--                    semi: false,
--                    trailingComma: "es5",
--                },
--                {
--                    usePrettierrc: false,
--                },
--            ],
+-        // prettier
+-        "@mysticatea/prettier": [
+-            "error",
+-            {
+-                tabWidth: 4,
+-                semi: false,
+-                trailingComma: "es5",
+-            },
+-            {
+-                usePrettierrc: false,
+-            },
+-        ],
 -
-             // my own
-             "@mysticatea/arrow-parens": "off",
-             "@mysticatea/block-scoped-var": "error",
+         // my own
+         "@mysticatea/arrow-parens": "off",
+         "@mysticatea/block-scoped-var": "error",
 --- a/lib/foreign-rules/prettier.js
 +++ b/lib/foreign-rules/prettier.js
 @@ -3,7 +3,3 @@
@@ -35,11 +35,11 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 -const rules = require("eslint-plugin-prettier").rules
 -
 -module.exports = { prettier: rules.prettier }
---- a/lib/configs/es2017.js
-+++ b/lib/configs/es2017.js
-@@ -13,17 +13,5 @@
-         Atomics: false,
-         SharedArrayBuffer: false,
+--- a/lib/configs/_override-2017.js
++++ b/lib/configs/_override-2017.js
+@@ -12,17 +12,5 @@
+         Atomics: "readonly",
+         SharedArrayBuffer: "readonly",
      },
 -    rules: {
 -        "@mysticatea/prettier": [
@@ -56,3 +56,47 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
 -    },
 +    rules: {},
  }
+--- a/lib/rules/no-useless-rest-spread.js
++++ b/lib/rules/no-useless-rest-spread.js
+@@ -131,11 +131,9 @@
+                     nodeType === "RestElement" && argumentType !== parentType
+                 const type1 = nodeType === "RestElement" ? "rest" : "spread"
+                 const type2 =
+-                    /*eslint-disable @mysticatea/prettier */
+                     isRestParameter ? "parameter" :
+                     isArray ? "element" :
+                     /* otherwise */ "property"
+-                    /*eslint-enable @mysticatea/prettier */
+ 
+                 context.report({
+                     node,
+--- a/lib/rules/prefer-for-of.js
++++ b/lib/rules/prefer-for-of.js
+@@ -115,7 +115,6 @@
+     let indexDecl = null
+     let lengthDecl = null
+ 
+-    /*eslint-disable @mysticatea/prettier */
+     return (
+         init != null &&
+         init.type === "VariableDeclaration" &&
+@@ -186,7 +185,6 @@
+             )
+         )
+     )
+-    /*eslint-enable @mysticatea/prettier */
+ }
+ 
+ /**
+--- a/tests/lib/configs/es5.js
++++ b/tests/lib/configs/es5.js
+@@ -26,8 +26,7 @@
+     const configuredRules = Rules.getRulesOfConfig(config, "es5")
+     const existingRules = [].concat(
+         Rules.getCoreRuleNames(),
+-        Rules.getPluginRuleNames("mysticatea"),
+-        Rules.getPluginRuleNames("prettier")
++        Rules.getPluginRuleNames("mysticatea")
+     )
+ 
+     it("should be a valid config.", () => {

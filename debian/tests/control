@@ -19,8 +19,6 @@ Test-Command:
  "'\+node.js' should include existing rule '\@mysticatea/node/callback-return'."
  "'\+node.js' should include existing rule '\@mysticatea/node/global-require'."
  "'\+node.js' should include existing rule '\@mysticatea/node/handle-callback-err'."
- "'\+node.js' should include existing rule '\@mysticatea/node/no-callback-literal'."
- "'\+node.js' should include existing rule '\@mysticatea/node/no-exports-assign'."
  "'\+node.js' should include existing rule '\@mysticatea/node/no-mixed-requires'."
  "'\+node.js' should include existing rule '\@mysticatea/node/no-new-require'."
  "'\+node.js' should include existing rule '\@mysticatea/node/no-path-concat'."

@@ -19,6 +19,10 @@ ESLINT += --format unix
 MOCHA += --reporter dot --no-colors
 endif
 
+# Work around ESLint seemingly not supporting NODE_PATH
+ESLINT_EXCLUDES += \
+ tests/lib/configs/_rules.js
+
 # Work around missing node modules
 MOCHA_EXCLUDES += \
  tests/lib/configs/ts.js \
@@ -29,15 +33,6 @@ MOCHA_ISOLATE += \
  tests/lib/configs/es5.js \
  tests/lib/configs/eslint-plugin.js \
  tests/lib/configs/node.js
-
-%:
-	dh $@
-
-%.html: %.md
-	pandoc --from gfm-raw_html --to html --standalone --output $@ $<
-
-%.txt: %.md
-	pandoc --from gfm-raw_html --to plain --output $@ $<
 
 override_dh_auto_clean:
 	rm -rf debian/node_modules
@@ -60,7 +55,8 @@ endif
 # TODO: fix remaining test failures
 override_dh_auto_test:
 ifeq (,$(filter pkg.eslint.stage1,$(DEB_BUILD_PROFILES)))
-	$(ESLINT) lib scripts tests
+	$(ESLINT) $(patsubst %,--ignore-pattern %,$(ESLINT_EXCLUDES)) \
+		lib scripts tests
 endif
 	$(MOCHA) $(patsubst %,--exclude %,$(MOCHA_EXCLUDES) $(MOCHA_ISOLATE)) \
 		"tests/lib/**/*.js"
@@ -75,8 +71,6 @@ endif
 		"'\+node.js' should include existing rule '\@mysticatea/node/callback-return'." \
 		"'\+node.js' should include existing rule '\@mysticatea/node/global-require'." \
 		"'\+node.js' should include existing rule '\@mysticatea/node/handle-callback-err'." \
-		"'\+node.js' should include existing rule '\@mysticatea/node/no-callback-literal'." \
-		"'\+node.js' should include existing rule '\@mysticatea/node/no-exports-assign'." \
 		"'\+node.js' should include existing rule '\@mysticatea/node/no-mixed-requires'." \
 		"'\+node.js' should include existing rule '\@mysticatea/node/no-new-require'." \
 		"'\+node.js' should include existing rule '\@mysticatea/node/no-path-concat'." \
@@ -88,3 +82,12 @@ endif
 
 override_dh_installdocs:
 	dh_installdocs --all -- $(DOCS)
+
+%.html: %.md
+	cmark-gfm $< > $@
+
+%.txt: %.md
+	cmark-gfm --to plaintext $< > $@
+
+%:
+	dh $@
